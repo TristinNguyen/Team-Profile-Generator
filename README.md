@@ -12,4 +12,4 @@ In terminal, using 'node index'
 ![Image Example](./public/assets/images/teamcap.PNG)
 ## Video Link
 
-![Video Walkthrough](https://drive.google.com/file/d/17vZcgs6AD8UYUZKUSSBf1kpMbgU7L5hT/view?usp=sharing)
+![Video Walkthrough](https://drive.google.com/file/d/1gvL5n92O8XblsNcUDGl1OrAw9ySRItyC/view)
