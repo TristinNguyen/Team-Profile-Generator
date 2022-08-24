@@ -1,9 +1,7 @@
 const inquirer = require('inquirer');
-
 const Manager = require('./lib/Manager');
 const Engineer = require('./lib/Engineer');
 const Intern = require('./lib/Intern');
-
 const fs = require('fs');
 const util = require('util');
 const html = require("./src/htmlFuncs");
@@ -11,34 +9,21 @@ const html = require("./src/htmlFuncs");
 // Set up Async file functions
 const writeFileAsync = util.promisify(fs.writeFile);
 const appendFileAsync = util.promisify(fs.appendFile);
-
+//testing content//
 
 let teamArray = [];
 let teamString = ``;
 
 console.clear();
-console.log("==========================================");
-console.log("teamGen - Team Portfolio Generator")
-console.log("==========================================");
-
-
 // Main function
 async function main() {
   try {
     await prompt()
-
     console.log(teamArray);
-
     for(let i = 0; i<teamArray.length; i++) {
-      console.log(teamString);
       teamString = teamString + html.generateCard(teamArray[i]);
     }
     let finalHTML = html.generateHTML(teamString);
-
-    console.clear();
-    console.log('------------------------------------------');
-    console.log('Generating index.html file...')
-    console.log('------------------------------------------');
 
     writeFileAsync('./dist/index.html', finalHTML);
 
@@ -51,7 +36,6 @@ async function main() {
     return console.log(err);
   }
 }
-
 // Inquirer function to gather user info
 async function prompt() {
   let resDone = 'Yes';
@@ -62,7 +46,7 @@ async function prompt() {
         {
           type: 'input',
           name: 'name',
-          message: "What is the employee's name? ",
+          message: "Name of the Employee? ",
           validate: (name) => {
             return name !== '';
           }
@@ -70,7 +54,7 @@ async function prompt() {
         {
           type: 'input',
           name: 'id',
-          message: "What is the employee's ID? ",
+          message: "ID of the Employee? ",
           validate: (id) => {
             return id !== '';
           }
@@ -78,7 +62,7 @@ async function prompt() {
         {
           type: 'input',
           name: 'email',
-          message: "What is the employee's email address? ",
+          message: "Email of Employee? ",
           validate: (email) => {
             return email !== '';
           }
@@ -103,7 +87,7 @@ async function prompt() {
           {
             type: 'input',
             name: 'office',
-            message: "What is the Manager's office number? ",
+            message: "What is their office number? ",
             validate: (office) => {
               return office !== '';
             }
@@ -123,8 +107,8 @@ async function prompt() {
         resRole = await inquirer.prompt([
           {
             type: 'input',
-            name: 'github',
-            message: "What is the Engineer's github username? ",
+            name: 'Github',
+            message: "Github username? ",
             validate: (github) => {
               return github !== '';
             }
@@ -145,7 +129,7 @@ async function prompt() {
           {
             type: 'input',
             name: 'school',
-            message: "What is the Intern's school name? ",
+            message: "What school does the Intern attend?",
             validate: (school) => {
               return school !== '';
             }
@@ -157,6 +141,7 @@ async function prompt() {
           resEmployee.name,
           resEmployee.id,
           resEmployee.email,
+          console.log("Fiction"),
           resRole.school);
         teamArray.push(intern);
       }
@@ -165,12 +150,12 @@ async function prompt() {
     } catch (err) {
       return console.log(err);
     }
-
+console.log("testing")
     resDone = await inquirer.prompt([
       {
         type: 'list',
         name: 'continue',
-        message: "Do you wish to continue adding team members? ",
+        message: "Add more team members? ",
         choices: [
           'Yes',
           'No'
