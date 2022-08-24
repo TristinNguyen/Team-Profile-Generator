@@ -1,10 +1,11 @@
 const inquirer = require('inquirer');
-const Manager = require('./lib/Manager');
-const Engineer = require('./lib/Engineer');
-const Intern = require('./lib/Intern');
 const fs = require('fs');
-const util = require('util');
 const html = require("./src/htmlFuncs");
+const Manager = require('./lib/Manager');
+const Intern = require('./lib/Intern');
+const util = require('util');
+const Engineer = require('./lib/Engineer');
+
 
 // Set up Async file functions
 const writeFileAsync = util.promisify(fs.writeFile);
@@ -20,19 +21,18 @@ async function main() {
   try {
     await prompt()
     console.log(teamArray);
-    for(let i = 0; i<teamArray.length; i++) {
+    for (let i = 0; i < teamArray.length; i++) {
       teamString = teamString + html.generateCard(teamArray[i]);
     }
     let finalHTML = html.generateHTML(teamString);
 
     writeFileAsync('./dist/index.html', finalHTML);
-
+    //clears console and add text//
     console.clear();
     console.log('------------------------------------------');
     console.log('index.html file created')
     console.log('------------------------------------------');
-  }
-  catch (err) {
+  } catch (err) {
     return console.log(err);
   }
 }
@@ -42,8 +42,7 @@ async function prompt() {
   do {
     try {
       console.log('------------------------------------------');
-      let resEmployee = await inquirer.prompt([
-        {
+      let resEmployee = await inquirer.prompt([{
           type: 'input',
           name: 'name',
           message: "Name of the Employee? ",
@@ -80,21 +79,19 @@ async function prompt() {
       ]);
 
       let resRole = ''
-
+      console.clear()
       if (resEmployee.role === 'Manager') {
         // Manager Role
-        resRole = await inquirer.prompt([
-          {
-            type: 'input',
-            name: 'office',
-            message: "What is their office number? ",
-            validate: (office) => {
-              return office !== '';
-            }
+        resRole = await inquirer.prompt([{
+          type: 'input',
+          name: 'office',
+          message: "What is their office number? ",
+          validate: (office) => {
+            return office !== '';
           }
-        ])
+        }])
 
-        // add to team array
+
         const manager = new Manager(
           resEmployee.name,
           resEmployee.id,
@@ -103,19 +100,17 @@ async function prompt() {
         teamArray.push(manager);
 
       } else if (resEmployee.role === 'Engineer') {
-        // Engineer Role
-        resRole = await inquirer.prompt([
-          {
-            type: 'input',
-            name: 'Github',
-            message: "Github username? ",
-            validate: (github) => {
-              return github !== '';
-            }
-          }
-        ])
 
-        // add to team array
+        resRole = await inquirer.prompt([{
+          type: 'input',
+          name: 'Github',
+          message: "Github username? ",
+          validate: (github) => {
+            return github !== '';
+          }
+        }])
+
+
         const engineer = new Engineer(
           resEmployee.name,
           resEmployee.id,
@@ -125,16 +120,14 @@ async function prompt() {
 
       } else {
         // Intern Role
-        resRole = await inquirer.prompt([
-          {
-            type: 'input',
-            name: 'school',
-            message: "What school does the Intern attend?",
-            validate: (school) => {
-              return school !== '';
-            }
+        resRole = await inquirer.prompt([{
+          type: 'input',
+          name: 'school',
+          message: "What school does the Intern attend?",
+          validate: (school) => {
+            return school !== '';
           }
-        ])
+        }])
 
         // add to team array
         const intern = new Intern(
@@ -146,22 +139,20 @@ async function prompt() {
         teamArray.push(intern);
       }
 
-
+      console.log("testing")
     } catch (err) {
       return console.log(err);
     }
-console.log("testing")
-    resDone = await inquirer.prompt([
-      {
-        type: 'list',
-        name: 'continue',
-        message: "Add more team members? ",
-        choices: [
-          'Yes',
-          'No'
-        ]
-      }
-    ])
+
+    resDone = await inquirer.prompt([{
+      type: 'list',
+      name: 'continue',
+      message: "Add more team members? ",
+      choices: [
+        'Yes',
+        'No'
+      ]
+    }])
     console.clear;
     console.log(resDone)
 

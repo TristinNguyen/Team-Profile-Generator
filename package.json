@@ -18,6 +18,7 @@
   "homepage": "https://github.com/rstanbaugh/teamGen#readme",
   "dependencies": {
     "inquirer": "^7.1.0",
+    "mysql2": "^2.3.3",
     "node": "^14.2.0"
   },
   "devDependencies": {
